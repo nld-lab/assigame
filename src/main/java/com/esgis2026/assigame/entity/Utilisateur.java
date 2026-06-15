@@ -1,5 +1,6 @@
 package com.esgis2026.assigame.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,21 +27,23 @@ public class Utilisateur {
     private String sexe_utilisateur;
 
     @Column(nullable = false, unique = true)
-    private String telephone_urilisateur;
+    private String telephone_utilisateur;
 
     @Column(unique = true, length = 100)
     private String mail_utilisateur;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, unique = true, length = 100)
+    @JsonProperty("login_utilisateur")
     private String Login_utilisateur;
 
     @Column(nullable = false, length = 100)
+    @JsonProperty("password_utilisateur")
     private String Password_utilisateur;
 
     @Column( unique = false, length = 200)
     private String residence_utilisateur;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_type_utilisateur")
     private TypeUtilisateur type_utilisateur;
 
@@ -63,7 +66,7 @@ public class Utilisateur {
                 ", nom_utilisateur='" + nom_utilisateur + '\'' +
                 ", prenom_utilisateur='" + prenom_utilisateur + '\'' +
                 ", sexe_utilisateur='" + sexe_utilisateur + '\'' +
-                ", telephone_urilisateur='" + telephone_urilisateur + '\'' +
+                ", telephone_utilisateur='" + telephone_utilisateur + '\'' +
                 ", mail_utilisateur='" + mail_utilisateur + '\'' +
                 ", Login_utilisateur='" + Login_utilisateur + '\'' +
                 ", Password_utilisateur='" + Password_utilisateur + '\'' +
