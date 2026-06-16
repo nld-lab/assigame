@@ -37,7 +37,7 @@ public class Utilisateur {
     private String Login_utilisateur;
 
     @Column(nullable = false, length = 100)
-    @JsonProperty("password_utilisateur")
+    @JsonProperty(value = "password_utilisateur", access = JsonProperty.Access.WRITE_ONLY)
     private String Password_utilisateur;
 
     @Column( unique = false, length = 200)
