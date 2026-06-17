@@ -2,6 +2,7 @@ package com.esgis2026.assigame.controller;
 
 import com.esgis2026.assigame.dto.AuthResponse;
 import com.esgis2026.assigame.dto.LoginRequest;
+import com.esgis2026.assigame.dto.UpdateProfileRequest;
 import com.esgis2026.assigame.dto.UtilisateurDto;
 import com.esgis2026.assigame.entity.Utilisateur;
 import com.esgis2026.assigame.service.AuthenticationService;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,5 +42,18 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(service.getCurrentUser(authentication.getName()));
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<UtilisateurDto> updateMe(
+            Authentication authentication,
+            @RequestBody UpdateProfileRequest request
+    ) {
+        if (authentication == null
+                || !authentication.isAuthenticated()
+                || "anonymousUser".equals(String.valueOf(authentication.getPrincipal()))) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok(service.updateCurrentUser(authentication.getName(), request));
     }
 }

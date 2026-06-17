@@ -3,6 +3,7 @@ package com.esgis2026.assigame.service;
 import com.esgis2026.assigame.config.JwtUtils;
 import com.esgis2026.assigame.dto.AuthResponse;
 import com.esgis2026.assigame.dto.LoginRequest;
+import com.esgis2026.assigame.dto.UpdateProfileRequest;
 import com.esgis2026.assigame.dto.UtilisateurDto;
 import com.esgis2026.assigame.entity.Utilisateur;
 import com.esgis2026.assigame.repository.UtilisateurRepository;
@@ -70,5 +71,10 @@ public class AuthenticationService {
         Utilisateur user = utilisateurRepository.findByLogin_utilisateur(login)
                 .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
         return UtilisateurDto.fromEntity(user);
+    }
+
+    public UtilisateurDto updateCurrentUser(String login, UpdateProfileRequest request) {
+        Utilisateur updated = utilisateurService.updateProfile(login, request);
+        return UtilisateurDto.fromEntity(updated);
     }
 }

@@ -57,11 +57,19 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll()
+                        auth.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers("/api/auth/**").permitAll()
+                                .requestMatchers("/api/produit/mes-produits").hasAnyRole("VENDEUR", "ADMIN")
+                                .requestMatchers("/api/produit/add").hasAnyRole("VENDEUR", "ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/produit/update/**").hasAnyRole("VENDEUR", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/produit/update/**").hasAnyRole("VENDEUR", "ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/produit/delete/**").hasAnyRole("VENDEUR", "ADMIN")
                                 .requestMatchers(HttpMethod.GET, "/api/produit/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/categorieproduit/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/typeutilisateur", "/api/typeutilisateur/**").permitAll()
-                                .requestMatchers("/api/produit/add").hasAnyRole("VENDEUR", "ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/categorieproduit/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.PUT, "/api/categorieproduit/**").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.DELETE, "/api/categorieproduit/**").hasRole("ADMIN")
                                 .requestMatchers("/api/utilisateur/**").hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 )
@@ -80,7 +88,7 @@ public class SecurityConfig {
                         .accessDeniedHandler((request, response, accessDeniedException) -> {
                             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                             response.setContentType("application/json");
-                            response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"You do not have permission to access this resource.\"}");
+                            response.getWriter().write("{\"error\": \"Forbidden\", \"message\": \"Vous n'avez pas les droits pour effectuer cette action. Connectez-vous avec un compte administrateur.\"}");
                         })
                 )
                 .build();

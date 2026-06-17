@@ -1,5 +1,6 @@
 package com.esgis2026.assigame.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,12 +22,20 @@ public class CategorieProduit {
     @Column(length = 100)
     private String description;
 
+    @JsonIgnore
+    @Column(columnDefinition = "BYTEA")
+    private byte[] image;
+
+    @Column(length = 100)
+    private String image_type;
+
     @Override
     public String toString() {
         return "CategorieProduit{" +
                 "idcategorie_produit=" + idcategorie_produit +
                 ", nom_categorieproduit='" + nom_categorieproduit + '\'' +
                 ", description='" + description + '\'' +
+                ", image_type='" + image_type + '\'' +
                 '}';
     }
 
