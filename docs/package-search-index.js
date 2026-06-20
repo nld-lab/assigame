@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"com.esgis2026.assigame"},{"l":"com.esgis2026.assigame.config"},{"l":"com.esgis2026.assigame.controller"},{"l":"com.esgis2026.assigame.dto"},{"l":"com.esgis2026.assigame.entity"},{"l":"com.esgis2026.assigame.repository"},{"l":"com.esgis2026.assigame.service"}];updateSearchResults();
