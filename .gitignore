@@ -1,5 +1,12 @@
 HELP.md
 target/
+
+# Secrets locaux — ne jamais versionner
+.env
+.env.local
+.env.*.local
+application-local.properties
+
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
